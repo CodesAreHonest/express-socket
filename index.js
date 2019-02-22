@@ -4,4 +4,4 @@ require('babel-register')({
     presets: [ 'env' ]
 })
 
-module.exports = require('./dist/server.js');
+module.exports = require('./connection/server.js');

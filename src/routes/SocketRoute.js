@@ -1,9 +1,9 @@
-import express from 'express'; 
+import express from 'express';
+import controller from '../../src/controllers/SocketController';
 
 const router = express.Router();
+const {socketPush} = controller;
 
-router.get('/', (req, res) => {
-    res.json({status: 'success'})
-})
+router.post('/push', socketPush);
 
 export default router;
