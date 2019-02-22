@@ -1,0 +1,27 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "Express and Socket.io Module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "socket.io",
+    "express"
+  ],
+  "author": "Yinghua Chai",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}
