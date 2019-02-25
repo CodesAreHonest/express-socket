@@ -1,7 +1,7 @@
 import http from 'http';
 import config from '../core/config';
 
-import Socket from './socket_io';
+import Socket from './socket';
 import Express from './express';
 
 class Server {
@@ -23,7 +23,7 @@ class Server {
         const express =  app.init();
         const server = http.createServer(express);
         const io = this.configureSocket(server);
-        app.useSocket(io);
+        app.setSocket(io);
         
         server.listen (this.port, () => {
             console.log (`Server is running on port ${this.port}`)

@@ -1,15 +1,24 @@
 import socket from 'socket.io';
 import server from '../../connection/server';
+import {getValidationResult} from 'express-validator/check';
+import {validationHandler} from '../validation/ValidationHelper';
 
-const io = socket(server);
 const controller = {};
 
 controller.socketPush = (req, res) => {
 
-    let io = req.app.get('socketio');
-    io.emit('testing', {data: 'This is Something'});
+    req.getValidationResult()
+    .then (validationHandler(res))
+    .then (result => {
 
-    res.json ({status: 'success'});
+        let io = req.app.get('socketio');
+
+        const {sentence} = req.body;
+        
+        io.emit('testing', {data: sentence});
+        
+        res.json ({status: sentence});
+    })
 }
 
 export default controller;

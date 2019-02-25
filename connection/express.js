@@ -6,6 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import route from '../src/routes/SocketRoute';
 import cors from 'cors';
+import expressValidator from 'express-validator';
 
 class Express {
 
@@ -13,10 +14,11 @@ class Express {
         this.app = express();
     }
 
-    init(io) {
+    init() {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(cors());
+        this.app.use(expressValidator());
         this.app.use('/', route);
 
         return this.app;
@@ -26,7 +28,7 @@ class Express {
         this.app.listen(port);
     }
 
-    useSocket(io) {
+    setSocket(io) {
         this.app.set('socketio', io);
     }
 }

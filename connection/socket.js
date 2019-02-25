@@ -7,11 +7,9 @@ class Socket {
     configure(server) {
         const io = socket(server);
 
-        io.on ('connection', (socket) => {
-            socket.on ('testing', () => {
-                socket.emit('testing', {data: 'this is something'})
-            })
-        })
+        // io.on ('connection', (socket) => {
+        //     console.log ('A User is connected');
+        // })
 
         return io;
     }
