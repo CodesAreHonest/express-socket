@@ -12,7 +12,9 @@ class Server {
 
     configureSocket(server) {
         let socket = new Socket;
-        socket.configure(server);
+        let io = socket.configure(server);
+
+        return io;
     }
 
     listen() {
@@ -20,8 +22,9 @@ class Server {
         const app = new Express;
         const express =  app.init();
         const server = http.createServer(express);
-        this.configureSocket(server);
-
+        const io = this.configureSocket(server);
+        app.useSocket(io);
+        
         server.listen (this.port, () => {
             console.log (`Server is running on port ${this.port}`)
         })

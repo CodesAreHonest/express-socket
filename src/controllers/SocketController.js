@@ -6,12 +6,8 @@ const controller = {};
 
 controller.socketPush = (req, res) => {
 
-    io.on('connection', (socket) => {
-        socket.on('testing', () => {
-            console.log (req.body);
-            socket.emit ('testing', req.body);
-        })
-    })
+    let io = req.app.get('socketio');
+    io.emit('testing', {data: 'This is Something'});
 
     res.json ({status: 'success'});
 }

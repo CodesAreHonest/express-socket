@@ -25,6 +25,10 @@ class Express {
     listen(port) {
         this.app.listen(port);
     }
+
+    useSocket(io) {
+        this.app.set('socketio', io);
+    }
 }
 
 export default Express;
