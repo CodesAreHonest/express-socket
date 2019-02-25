@@ -1,19 +1,24 @@
 
-export const validationHandler = (res, next) => result => {
+import {validationResult} from 'express-validator/check';
 
-    // console.log (result);
+export const validationHandler = (req, res, next) => (resolve, reject) => {
 
-    // if (result.isEmpty()) { next() }
-    
+    const errorFormatter = ({
+        location, msg, param
+    }) => {
+        return `[${location}]: ${param} ${msg}`;
+    }
+
+    const result = validationResult(req).formatWith(errorFormatter);
+
+    if (result.isEmpty()) { return }
+
     if (!next) {
-
-        const response_msg = result.array()
-            .map(i => `${i.param} ${i.msg}`)
-            .join(' '); 
-
-        res.json({
+        
+        res.status(422).send({
             response_code: 422,
-            response_msg: response_msg
+            response_msg: 'Unprocessable Entity',
+            response_detail: result.array()
         });
     }
 }

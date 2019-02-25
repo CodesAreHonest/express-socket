@@ -5,20 +5,21 @@ import {validationHandler} from '../validation/ValidationHelper';
 
 const controller = {};
 
-controller.socketPush = (req, res) => {
+controller.socketPush = async (req, res) => {
 
-    req.getValidationResult()
-    .then (validationHandler(res))
-    .then (result => {
-
-        let io = req.app.get('socketio');
-
-        const {sentence} = req.body;
-        
-        io.emit('testing', {data: sentence});
-        
-        res.json ({status: sentence});
+    let testing = await req.getValidationResult()
+    .then(validationHandler(req, res))
+    .then (result  => {
+        console.log(result.header().statusCode);
     })
+
+    console.log (testing);
+
+    // let io = req.app.get('socketio');
+        
+    // io.emit('testing', {data: req.body});
+        
+    // res.json ({status: req.body});
 }
 
 export default controller;
