@@ -1,25 +1,25 @@
-import socket from 'socket.io';
-import server from '../../connection/server';
-import {getValidationResult} from 'express-validator/check';
 import {validationHandler} from '../validation/ValidationHelper';
 
 const controller = {};
 
 controller.socketPush = async (req, res) => {
 
-    let testing = await req.getValidationResult()
-    .then(validationHandler(req, res))
-    .then (result  => {
-        console.log(result.header().statusCode);
-    })
+    // Body and Header Validation 
+    let validation_response = await validationHandler(req, res);
 
-    console.log (testing);
+    if (validation_response.response_code === 422) {
+        return res.status(422).send(validation_response);
+    }
 
-    // let io = req.app.get('socketio');
+    let io = req.app.get('socketio');
         
-    // io.emit('testing', {data: req.body});
-        
-    // res.json ({status: req.body});
+    io.emit('testing', {data: req.body});
+            
+    res.status(200).send ({
+        response_code: 200,
+        response_msg: 'success',
+        response_data: req.body
+    });  
 }
 
 export default controller;
