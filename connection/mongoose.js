@@ -7,13 +7,20 @@ class MongoConnection {
     constructor() {}
 
     connect() {
+
         const {dbHost, dbPort, dbName} = config;
 
-        const connectionString = `mongodb://${dbHost}:${dbPort}/${dbName}`;
+        try {
+            const connectionString = `mongodb://${dbHost}:${dbPort}/${dbName}`;
 
-        Mongoose.connect(connectionString, {
-            useNewUrlParser : true
-        });
+            Mongoose.connect(connectionString, {
+                useNewUrlParser : true
+            });
+
+        }
+        catch (err) {
+            console.log (`error connection to mongodb ${err}`)
+        }
 
         return Mongoose;
     }

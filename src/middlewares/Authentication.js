@@ -19,12 +19,11 @@ class Authentication {
 
     verification(apikey) {
 
-        Action.find({apikey}, (err, result) => {
-            if (err) {
-                console.log (`error ${err}`);
-            } else {
-                console.log (`success ${result}`);
-            }
+        Action.find({apikey: "781d72e1aa8deaecf0f4a9d0433480b1"})
+        .exec((err, result) => {
+            console.log (err);
+            console.log (result);
+
         });
     }
 }
