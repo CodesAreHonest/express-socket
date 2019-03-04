@@ -5,20 +5,17 @@ class Authentication {
     constructor() {}
 
     init() {
-        const authentication = async (req, res, next) => {
+        const authentication = (req, res, next) => {
 
             const apiKey = req.get('x-authorization');
 
-            const verification =  await this.verification(apiKey);
-            console.log (verification);
+            this.verification(apiKey).then(result => {
+                req.app.set('event_code', result['event_code']) 
+                next();
 
-            if (verification['response_code'] !== 422) {
-                res.status(422).send (verification['response_data']);
-            }
-
-            req.app.set('event_code', verification['event_code'])
-
-            next();
+            }).catch(err => {
+                return res.status(422).send(err);
+            })
         };
 
         return authentication;
@@ -26,22 +23,24 @@ class Authentication {
 
     verification(apikey) {
 
-        Action.findOne({apikey}, (err, result) => {
-            if (err)  {
-                return {
-                    'response_code' : 422,
-                    'response_msg'  : 'Invalid API Key.',
-                    'response_data' : err
+        return new Promise ((resolve, reject) => {
+            Action.findOne({apikey}, (err, result) => {
+                
+                if (result === null) {
+                    return reject({
+                        'response_code' : 422,
+                        'response_msg'  : 'Invalid API Key.',
+                    })
                 }
-            }
-
-            const {event_code} = result;
-
-            return {
-                'response_code' : 200,
-                'response_msg'  : 'success',
-                'event_code'    : event_code
-            }
+    
+                const {event_code} = result;
+    
+                return resolve({
+                    'response_code' : 200,
+                    'response_msg'  : 'success',
+                    'event_code'    : event_code
+                })
+            })
         });
     }
 }
