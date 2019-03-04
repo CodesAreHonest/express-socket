@@ -25,6 +25,8 @@ class Authentication {
 
         return new Promise ((resolve, reject) => {
             Action.findOne({apikey}, (err, result) => {
+
+                if (err) { return reject(err); }
                 
                 if (result === null) {
                     return reject({
