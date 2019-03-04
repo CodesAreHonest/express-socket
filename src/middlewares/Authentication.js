@@ -5,11 +5,18 @@ class Authentication {
     constructor() {}
 
     init() {
-        const authentication = (req, res, next) => {
+        const authentication = async (req, res, next) => {
 
             const apiKey = req.get('x-authorization');
 
-            this.verification(apiKey);
+            const verification =  await this.verification(apiKey);
+            console.log (verification);
+
+            if (verification['response_code'] !== 422) {
+                res.status(422).send (verification['response_data']);
+            }
+
+            req.app.set('event_code', verification['event_code'])
 
             next();
         };
@@ -19,11 +26,22 @@ class Authentication {
 
     verification(apikey) {
 
-        Action.find({apikey: "781d72e1aa8deaecf0f4a9d0433480b1"})
-        .exec((err, result) => {
-            console.log (err);
-            console.log (result);
+        Action.findOne({apikey}, (err, result) => {
+            if (err)  {
+                return {
+                    'response_code' : 422,
+                    'response_msg'  : 'Invalid API Key.',
+                    'response_data' : err
+                }
+            }
 
+            const {event_code} = result;
+
+            return {
+                'response_code' : 200,
+                'response_msg'  : 'success',
+                'event_code'    : event_code
+            }
         });
     }
 }

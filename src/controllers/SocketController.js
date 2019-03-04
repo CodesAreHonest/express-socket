@@ -13,7 +13,7 @@ controller.socketPush = async (req, res) => {
 
     let io = req.app.get('socketio');
         
-    io.emit('testing', {data: req.body});
+    await io.emit('testing', {data: req.body});
             
     res.status(200).send ({
         response_code: 200,

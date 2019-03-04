@@ -1,7 +1,5 @@
-import Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import config from '../core/config';
-
-Mongoose.Promise = global.Promise;
 
 class MongoConnection {
     constructor() {}
@@ -13,16 +11,15 @@ class MongoConnection {
         try {
             const connectionString = `mongodb://${dbHost}:${dbPort}/${dbName}`;
 
-            Mongoose.connect(connectionString, {
+            mongoose.connect(connectionString, {
                 useNewUrlParser : true
             });
-
         }
         catch (err) {
             console.log (`error connection to mongodb ${err}`)
         }
 
-        return Mongoose;
+        return mongoose;
     }
 }
 

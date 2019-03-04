@@ -5,7 +5,7 @@ const schema = mongoose.Schema;
 const mongo = new MongoConnection;
 const mongo_connection = mongo.connect();
 
-const actionSchema = schema ({
+const actionSchema = new schema ({
     event_code: String,
     apikey: String,
 })
