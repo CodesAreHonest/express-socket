@@ -23,6 +23,7 @@ class Server {
         const express =  app.init();
         const server = http.createServer(express);
         const io = this.configureSocket(server);
+        
         app.setSocket(io);
         
         server.listen (this.port, () => {
