@@ -11,14 +11,17 @@ controller.socketPush = async (req, res) => {
         return res.status(422).send(validation_response);
     }
 
-    let io = req.app.get('socketio');
+    const io = req.app.get('socketio');
+    const {market, params} = req.body;
+    const event_code = req.app.get('event_code');
+    const string = `${event_code}@${market}-channel`; 
         
-    await io.emit('testing', {data: req.body});
+    await io.emit(string, params);
             
     res.status(200).send ({
         response_code: 200,
         response_msg: 'success',
-        response_data: req.body
+        received_body: req.body
     });  
 }
 

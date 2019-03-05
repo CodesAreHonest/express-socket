@@ -25,23 +25,4 @@ export const validationHandler = (req, res, next) => {
             response_detail: result.array()
         };
     }
-
-        
-    // return new Promise ((resolve, reject) => {
-
-    //     if (result.isEmpty()) { 
-    //         resolve({
-    //             response_code: 200,
-    //             response_msg: "Validation Success"
-    //         }) 
-    //     }
-
-    //     if (!next) {
-    //         reject({
-    //             response_code: 422,
-    //             response_msg: 'Unprocessable Entity',
-    //             response_detail: result.array()
-    //         });
-    //     }
-    // })
 }
