@@ -34,11 +34,11 @@ class Server {
     }
 }
 
-// const server = new Server;
-// server.listen();
-
 const secureServer = new SecureServer;
 secureServer.listen();
 
-export default secureServer;
+const server = new Server;
+server.listen();
+
+export default server;
 
