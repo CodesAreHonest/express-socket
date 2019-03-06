@@ -25,4 +25,10 @@ controller.socketPush = async (req, res) => {
     });  
 }
 
+controller.getStatus = (req, res) => {
+    res.status(200).send({
+        data: 'hello world'
+    })
+}
+
 export default controller;

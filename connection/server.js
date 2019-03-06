@@ -4,6 +4,8 @@ import config from '../core/config';
 import Socket from './socket';
 import Express from './express';
 
+import SecureServer from './secure_server';
+
 class Server {
 
     constructor() {
@@ -32,8 +34,11 @@ class Server {
     }
 }
 
-const server = new Server;
-server.listen();
+// const server = new Server;
+// server.listen();
 
-export default server;
+const secureServer = new SecureServer;
+secureServer.listen();
+
+export default secureServer;
 
