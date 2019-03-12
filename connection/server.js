@@ -34,8 +34,8 @@ class Server {
     }
 }
 
-const secureServer = new SecureServer;
-secureServer.listen();
+// const secureServer = new SecureServer;
+// secureServer.listen();
 
 const server = new Server;
 server.listen();
